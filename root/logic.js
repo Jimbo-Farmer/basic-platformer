@@ -5,12 +5,11 @@ ctx.canvas.height = 300;
 ctx.canvas.width = 1200;
 
 const status = document.querySelector(".status");
-const titleArea = document.querySelector("div");
 const tryAgain = document.querySelector(".try-again");
 
 // Attributes of the player
 let player = {
-    x: 200,
+    x: 120,
     y: 200,
     x_v: 0,
     y_v: 0,
@@ -163,7 +162,7 @@ function loop() {
         }         
     }
 
-    // code to make the moving platform
+    // code to make platform 3 move
     if(platforms[3].x < 800){ 
         platforms[3].x += slide;
     } 
@@ -182,7 +181,7 @@ function loop() {
 
     // check for game over or victory
 
-    if(player.y > canvas.height){
+    if(player.y > canvas.height + player.height){           // (if the player has fallen off the screen) 
         status.innerHTML = "Game Over";
         tryAgain.classList.toggle("hidden");
         clearInterval(gameLoop); 
@@ -201,12 +200,14 @@ function loop() {
     renderplayer();
     renderplat();
 }
+
 let gameLoop = setInterval(loop,20);
+// Calling loop every 20 milliseconds to update the frame
 
 tryAgain.addEventListener("click",function(){
     status.innerHTML = "";
     tryAgain.classList.toggle("hidden");
-    player.x = 200;
+    player.x = 120;
     player.y = 150;
     player.y_v = 0;
     jump = true;
@@ -215,9 +216,7 @@ tryAgain.addEventListener("click",function(){
 
 document.addEventListener("keydown",keydown);
 document.addEventListener("keyup",keyup);
-// Calling loop every 20 milliseconds to update the frame
+
 
 gameLoop;
-console.log("platform x " + platforms[0].x);
 
-console.log("platforms x + platform width " + (platforms[0].x + platforms[0].width));

@@ -1,0 +1,32 @@
+p {
+    color: white;
+    display: inline-block;
+    margin: 10px 100px 10px 0px;
+    padding: 5px;
+}
+body {
+    position: relative;
+    background-color: black;
+}
+
+div {
+    font-size: 3rem;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+}
+
+.try-again {
+    border: 2px solid white;
+    border-radius: 5px;
+    font-size: 2rem;
+    color: black;
+    background-color: lightgreen;   
+}
+
+.try-again:hover {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}

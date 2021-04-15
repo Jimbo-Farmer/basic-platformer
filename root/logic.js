@@ -1,6 +1,6 @@
 
-canvas=document.getElementById("canvas");
-ctx=canvas.getContext("2d");
+const canvas = document.querySelector("canvas");
+const ctx = canvas.getContext("2d");
 ctx.canvas.height = 300;
 ctx.canvas.width = 1200;
 
@@ -15,7 +15,7 @@ let player = {
     y_v: 0,
     jump : false,
     height: 20,
-    width: 20
+    width: 20,
     };
 
 // The status of the arrow keys    
@@ -63,9 +63,6 @@ let platforms = [{
 
 let finalPlatform = platforms[platforms.length-1];
 
-// The number of platforms
-let numPlatforms = platforms.length;
-
 // Function to render the canvas
 function rendercanvas(){
     ctx.fillStyle = "#F0F8FF";
@@ -81,7 +78,7 @@ function renderplayer(){
 // Function to render platforms
 function renderplat(){
     ctx.fillStyle = "blue";
-    for(let i= 0; i<numPlatforms; i++){
+    for(let i= 0; i<platforms.length; i++){
         ctx.fillRect(platforms[i].x, platforms[i].y, platforms[i].width, platforms[i].height);
     }
     ctx.fillStyle = "pink";
@@ -113,72 +110,72 @@ function keyup(e) {
     if(e.keyCode === 37) {
         keys.left = false;
     }
-    if(e.keyCode === 38) {
-        
+    if(e.keyCode === 38) { 
         if(player.y_v < -2) {     
             player.y_v = -1;      // if jump is released quickly the jump will be shorter.
         }
-        player.y_v += gravity;
     }
     if(e.keyCode === 39) {
         keys.right = false;
     }
-} 
+}
+
+document.addEventListener("keydown",keydown);
+document.addEventListener("keyup",keyup);
 
 let slide = 2; // sets the speed of the moving platform. 
 
 function loop() {
     // If the player is jumping apply the effect of gravity
-    if(player.jump === true || player.y_v < 0){
+    if(player.jump === true){ 
         player.y_v += gravity;
     } 
 
     // If the left key is pressed, move the player to the left
     if(keys.left) {
-        player.x+= -2.5;
-    }
+        player.x_v = -2.5;
+    } 
     
      // If the right key is pressed, move the player to the right
-    if(keys.right) {
-        player.x  += 2.5;
-    }
-
-    // Updating the y and x coordinates of the player
-    player.y += player.y_v;
-    player.x += player.x_v;
-    let j;
-    j = 0;
-    // Code that checks for collisions with at least one platform
-    for(let i =0; i<platforms.length; i++){
-        if((platforms[i].x <= (player.x+(player.width/2)-1)) && ((player.x-(player.width/2)+1) < platforms[i].x + platforms[i].width) && (player.y >= platforms[i].y) && (player.y <= platforms[i].y + platforms[i].height)){   
-            j += platforms.length;
-            player.y = platforms[i].y;
-            player.jump = false; 
-        }
-        else { j -=1
-        } 
-        if (j < 0){
-            player.jump = true;
-        }         
-    }
-
-    // code to make platform 3 move
-    if(platforms[3].x < 800){ 
-        platforms[3].x += slide;
-    } 
-    if(platforms[3].x >= 800){
-        slide = -2;
-        platforms[3].x -= 1;
-    }
-    if(platforms[3].x <= 520){
-        slide = 2;
-    }
-    if((platforms[3].x <= (player.x+(player.width/2)-1)) && ((player.x-(player.width/2)+1) < platforms[3].x + platforms[3].width) && (player.y === platforms[3].y)){
-        player.x_v = slide;
+    else if(keys.right) {
+        player.x_v  = 2.5;
     } else {
         player.x_v = 0;
     }
 
+    // code to make platform 3 move
+    platforms[3].x += slide;
+     
+    if(platforms[3].x >= 800 || platforms[3].x <= 520){
+        slide = -slide;
+    }
+    
+    if((platforms[3].x <= (player.x+(player.width/2)-1)) && ((player.x-(player.width/2)+1) < platforms[3].x + platforms[3].width) && (player.y === platforms[3].y)){
+        player.x_v += slide;
+    } 
+    
+    // Updating the y and x coordinates of the player
+    player.y += player.y_v;
+    player.x += player.x_v;
+    
+    
+    // Code that checks for collisions with at least one platform
+    let j = 0;
+    for(let i =0; i<platforms.length; i++){
+        if((platforms[i].x <= (player.x+(player.width/2)-1)) && ((player.x-(player.width/2)+1) < platforms[i].x + platforms[i].width) && (player.y >= platforms[i].y) && (player.y <= platforms[i].y + platforms[i].height)){   
+            j += platforms.length;
+            player.y = platforms[i].y;
+            player.jump = false;
+            player.y_v = 0; 
+        }   
+        else { j -=1
+        } 
+        if (j < 0){
+            player.jump = true;
+        }           
+    }
+
+    
     // check for game over or victory
 
     if(player.y > canvas.height + player.height){           // (if the player has fallen off the screen) 
@@ -191,9 +188,6 @@ function loop() {
         status.innerHTML = "Well Done!";
         clearInterval(gameLoop);
     }
-
-    
-    
     
     // Rendering the canvas, the player and the platforms
     rendercanvas();
@@ -201,7 +195,7 @@ function loop() {
     renderplat();
 }
 
-let gameLoop = setInterval(loop,20);
+let gameLoop = setInterval(loop, 20);
 // Calling loop every 20 milliseconds to update the frame
 
 tryAgain.addEventListener("click",function(){
@@ -213,10 +207,6 @@ tryAgain.addEventListener("click",function(){
     jump = true;
     gameLoop = setInterval(loop,20);
 });
-
-document.addEventListener("keydown",keydown);
-document.addEventListener("keyup",keyup);
-
 
 gameLoop;
 

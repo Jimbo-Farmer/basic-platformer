@@ -1,18 +1,22 @@
-p {
+h1 {
+    font-size: 3rem;
+    margin-bottom: 0;
+}
+
+body {
     color: white;
+    position: relative;
+    background-color: black;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+header {
+    height: 200px;
+}
+p {
+    font-size: 2rem;
     display: inline-block;
     margin: 10px 100px 10px 0px;
     padding: 5px;
-}
-body {
-    position: relative;
-    background-color: black;
-}
-
-div {
-    font-size: 3rem;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-
 }
 
 .try-again {

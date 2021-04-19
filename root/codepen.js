@@ -1,16 +1,17 @@
 const canvas = document.querySelector("canvas");
-const ctx = canvas.getContext("2d"); // tells us that we're drawing in 2D, which comes with a set of methods we can call for drawing, such as rectangles, arc, lines etc
+const ctx = canvas.getContext("2d"); 
 ctx.canvas.height = 300;
 ctx.canvas.width = 1200;
 
+// ctx constant tells us that we're drawing in 2D, which comes with a set of methods we can call for drawing, such as rectangles, arc, lines etc
 // We've set the canvas width and height, but now we need to fill it in by drawing a rectangle
 
-function rendercanvas(){
+function renderBackground(){
     ctx.fillStyle = "#F0F8FF";
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 }
 
-renderCanvas();  // we will move this later, as we want the canvas to be redrawn every frame. 
+renderBackground();  // we will move this later, as we want the canvas to be redrawn every frame. 
 
 let platforms = [{
     x: 100,

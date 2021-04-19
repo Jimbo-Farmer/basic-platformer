@@ -9,9 +9,11 @@ body {
     background-color: black;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
+
 header {
     height: 200px;
 }
+
 p {
     font-size: 2rem;
     display: inline-block;
@@ -38,4 +40,8 @@ p {
 .instructions {
     font-size: 1rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+canvas {
+    border: 1px solid cyan;
 }

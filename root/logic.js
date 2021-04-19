@@ -63,16 +63,10 @@ let platforms = [{
 
 let finalPlatform = platforms[platforms.length-1];
 
-// Function to render the canvas
-function rendercanvas(){
-    ctx.fillStyle = "#F0F8FF";
+// Function to draw background
+function renderBackground(){
+    ctx.fillStyle = "white";
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-}
-
-// Function to render the player
-function renderplayer(){
-    ctx.fillStyle = "#F08080";
-    ctx.fillRect((player.x)-10, (player.y)-20, player.width, player.height);
 }
 
 // Function to render platforms
@@ -83,6 +77,12 @@ function renderplat(){
     }
     ctx.fillStyle = "pink";
     ctx.fillRect(finalPlatform.x, finalPlatform.y, finalPlatform.width, finalPlatform.height);
+}
+
+// Function to render the player
+function renderplayer(){
+    ctx.fillStyle = "#F08080";
+    ctx.fillRect((player.x)-10, (player.y)-20, player.width, player.height);
 }
 
 // This function is called when one of the arrow keys is pressed
@@ -96,8 +96,7 @@ function keydown(e) {
         if(player.jump === false){
             player.y_v = -10;
         }
-        player.jump = true
-        
+        player.jump = true   
     }
     // 39 is the code for the right arrow key
     if(e.keyCode === 39) {
@@ -190,7 +189,7 @@ function loop() {
     }
     
     // Rendering the canvas, the player and the platforms
-    rendercanvas();
+    renderBackground();
     renderplayer();
     renderplat();
 }

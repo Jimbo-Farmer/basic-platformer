@@ -149,7 +149,7 @@ function loop() {
         slide = -slide;
     }
     
-    if((platforms[3].x <= (player.x+(player.width/2)-1)) && ((player.x-(player.width/2)+1) < platforms[3].x + platforms[3].width) && (player.y === platforms[3].y)){
+    if((platforms[3].x <= (player.x +(player.width/2)-1)) && ((player.x -(player.width/2)+1) < platforms[3].x + platforms[3].width) && (player.y === platforms[3].y)){
         player.x_v += slide;
     } 
     
@@ -159,19 +159,18 @@ function loop() {
     
     
     // Code that checks for collisions with at least one platform
-    let j = 0;
+    
     for(let i =0; i<platforms.length; i++){
         if((platforms[i].x <= (player.x+(player.width/2)-1)) && ((player.x-(player.width/2)+1) < platforms[i].x + platforms[i].width) && (player.y >= platforms[i].y) && (player.y <= platforms[i].y + platforms[i].height)){   
-            j += platforms.length;
             player.y = platforms[i].y;
             player.jump = false;
-            player.y_v = 0; 
-        }   
-        else { j -=1
-        } 
-        if (j < 0){
+            player.y_v = 0;
+            break; 
+        }  
+        else { 
             player.jump = true;
-        }           
+        } 
+                  
     }
 
     

@@ -106,18 +106,33 @@ function keyup(e){
   }
   if(e.keyCode === 38){
     if(player.y_v < -2){
-      pllayer.y_v = -1;
+      player.y_v = -1;
     }
   }
 }
 
+document.addEventListener("keydown",keydown);
+document.addEventListener("keyup",keyup);
+
+
 function loop(){
-    if(keys.left) {
-          player.x_v -= 2.5;
+    if(player.jump){
+        player.y_v += gravity;
+    }
+
+
+    if (keys.left) {
+          player.x_v = -2.5;
       }
-    if(keys.right) {
-          player.x_v  += 2.5;
+    else if (keys.right) {
+          player.x_v  = 2.5;
       }
+    else {
+        player.x_v = 0;
+    }
+
+    // do platform here, switch to logic file. 
+
     player.y += player.y_v;
     player.x += player.x_v;
     
@@ -127,8 +142,7 @@ function loop(){
   }
   
   let gameLoop = setInterval(loop, 20);
-  document.addEventListener("keydown",keydown);
-  document.addEventListener("keyup",keyup);
+  
   gameLoop;
 
 

@@ -3,6 +3,10 @@ h1 {
     margin-bottom: 0;
 }
 
+button {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
 body {
     color: white;
     position: relative;
@@ -14,7 +18,7 @@ header {
     height: 200px;
 }
 
-p {
+p, button {
     font-size: 2rem;
     display: inline-block;
     margin: 10px 100px 10px 0px;

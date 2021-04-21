@@ -122,6 +122,7 @@ function keyup(e) {
 document.addEventListener("keydown",keydown);
 document.addEventListener("keyup",keyup);
 
+
 let slide = 2; // sets the speed of the moving platform. 
 
 function loop() {

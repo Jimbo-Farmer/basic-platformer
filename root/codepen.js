@@ -11,6 +11,8 @@ function renderBackground(){
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 }
 
+// No equals on fillRect.
+
 renderBackground();  // we will move this later, as we want the canvas to be redrawn every frame. 
 
 let platforms = [{
@@ -123,11 +125,9 @@ function loop(){
 
     if (keys.left) {
           player.x_v = -2.5;
-      }
-    else if (keys.right) {
+      }  else if (keys.right) {
           player.x_v  = 2.5;
-      }
-    else {
+      }  else {
         player.x_v = 0;
     }
 

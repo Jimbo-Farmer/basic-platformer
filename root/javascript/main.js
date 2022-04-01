@@ -1,3 +1,5 @@
+import { platformsLevelOne }  from './components/levels.js'
+import { playerDetails, renderplayer } from './components/player.js';
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -7,17 +9,9 @@ ctx.canvas.width = 1200;
 const status = document.querySelector(".status");
 const tryAgain = document.querySelector(".try-again");
 
-// Attributes of the player
-let player = {
-    x: 120,
-    y: 200,
-    x_v: 0,
-    y_v: 0,
-    jump : false,
-    height: 20,
-    width: 20,
-    };
-
+let platforms = platformsLevelOne;
+let player = playerDetails;
+console.log(platforms)
 // The status of the arrow keys    
 let keys = {
     right: false,
@@ -26,40 +20,7 @@ let keys = {
     };
 
 // The gravity to show realistic movements    
-let gravity = 0.6;
-
-// The platforms
-let platforms = [{
-    x: 100,
-    y: 200,
-    width: 110,
-    height: 15
-    },
-    {
-    x: 250,
-    y: 200,
-    width: 110,
-    height: 15
-    },
-    {
-    x: 400,
-    y: 150,
-    width: 110,
-    height: 15
-    },
-    {   // this has been turned into a moving platform. 
-    x: 520,
-    y: 150,
-    width: 110,
-    height: 15
-    },
-    {
-    x: 930,
-    y: 100,
-    width: 100,
-    height: 15   
-    }
-];
+let gravity = 0.9;
 
 let finalPlatform = platforms[platforms.length-1];
 
@@ -79,24 +40,20 @@ function renderplat(){
     ctx.fillRect(finalPlatform.x, finalPlatform.y, finalPlatform.width, finalPlatform.height);
 }
 
-// Function to render the player
-function renderplayer(){
-    ctx.fillStyle = "#F08080";
-    ctx.fillRect((player.x)-10, (player.y)-20, player.width, player.height);
-}
-
 // This function is called when one of the arrow keys is pressed
 function keydown(e) {
     // 37 is the code for the left arrow key
     if(e.keyCode === 37) {
         keys.left = true;
+        
     }
     // 38 is the code for the up arrow key
     if(e.keyCode === 38) {
         if(player.jump === false){
-            player.y_v = -10;
-        }
-        player.jump = true   
+            player.y_v = -12;
+            
+        } 
+        player.jump = true    
     }
     // 39 is the code for the right arrow key
     if(e.keyCode === 39) {
@@ -110,8 +67,8 @@ function keyup(e) {
         keys.left = false;
     }
     if(e.keyCode === 38) { 
-        if(player.y_v < -2) {     
-            player.y_v = -1;      // if jump is released quickly the jump will be shorter.
+        if(player.y_v < -3) {     
+            player.y_v = -3;      // if jump is released quickly the jump will be shorter.
         }
     }
     if(e.keyCode === 39) {
@@ -126,19 +83,21 @@ document.addEventListener("keyup",keyup);
 let slide = 2; // sets the speed of the moving platform. 
 
 function loop() {
+    
     // If the player is jumping apply the effect of gravity
     if(player.jump === true){ 
         player.y_v += gravity;
     } 
+    
 
     // If the left key is pressed, move the player to the left
     if(keys.left) {
-        player.x_v = -2.5;
+        player.x_v = -3;
     } 
     
      // If the right key is pressed, move the player to the right
     else if(keys.right) {
-        player.x_v  = 2.5;
+        player.x_v  = 3;
     } else {
         player.x_v = 0;
     }
@@ -150,7 +109,7 @@ function loop() {
         slide = -slide;
     }
     
-    if((platforms[3].x <= (player.x +(player.width/2)-1)) && ((player.x -(player.width/2)+1) < platforms[3].x + platforms[3].width) && (player.y === platforms[3].y)){
+    if((platforms[3].x <= (player.x +9)) && ((player.x -11) < platforms[3].x + platforms[3].width) && (player.y === platforms[3].y)){
         player.x_v += slide;
     } 
     
@@ -161,8 +120,8 @@ function loop() {
     
     // Code that checks for collisions with at least one platform
     
-    for(let i =0; i<platforms.length; i++){
-        if((platforms[i].x <= (player.x+(player.width/2)-1)) && ((player.x-(player.width/2)+1) < platforms[i].x + platforms[i].width) && (player.y >= platforms[i].y) && (player.y <= platforms[i].y + platforms[i].height)){   
+    for(let i =0; i <platforms.length; i++){
+        if((platforms[i].x <= (player.x + 9)) && ((player.x - 11) < platforms[i].x + platforms[i].width) && (player.y >= platforms[i].y) && (player.y <= (platforms[i].y + platforms[i].height))){   
             player.y = platforms[i].y;
             player.jump = false;
             player.y_v = 0;
@@ -177,20 +136,21 @@ function loop() {
     
     // check for game over or victory
 
-    if(player.y > canvas.height + player.height){           // (if the player has fallen off the screen) 
+    if(player.y > canvas.height + 40){           // (if the player has fallen off the screen) 
         status.innerHTML = "Game Over";
         tryAgain.classList.toggle("hidden");
         clearInterval(gameLoop); 
     }
 
-    if((finalPlatform.x <= (player.x+(player.width/2)-1)) && ((player.x-(player.width/2)+1) < finalPlatform.x + finalPlatform.width) && (player.y === finalPlatform.y)){
+    if((finalPlatform.x <= (player.x+9)) && ((player.x-11) < finalPlatform.x + finalPlatform.width) && (player.y === finalPlatform.y)){
         status.innerHTML = "Well Done!";
+        tryAgain.classList.toggle("hidden");
         clearInterval(gameLoop);
     }
     
     // Rendering the canvas, the player and the platforms
     renderBackground();
-    renderplayer();
+    renderplayer(ctx, player.x, player.y);
     renderplat();
 }
 
@@ -203,7 +163,7 @@ tryAgain.addEventListener("click",function(){
     player.x = 120;
     player.y = 150;
     player.y_v = 0;
-    jump = true;
+    player.jump = true;
     gameLoop = setInterval(loop,20);
 });
 
